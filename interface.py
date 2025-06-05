@@ -12,21 +12,17 @@ class App:
         self.root.title("Анализ кредитных данных")
         self.root.geometry("1000x800")
         
-        # Создаем вкладки
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        # Вкладка текстовых отчетов
         self.text_reports_frame = ttk.Frame(self.notebook)
         self.notebook.add(self.text_reports_frame, text="Текстовые отчеты")
         self.setup_text_reports()
         
-        # Вкладка графиков
         self.plots_frame = ttk.Frame(self.notebook)
         self.notebook.add(self.plots_frame, text="Графики")
         self.setup_plots()
         
-        # Вкладка моделей
         self.models_frame = ttk.Frame(self.notebook)
         self.notebook.add(self.models_frame, text="Модели")
         self.setup_models()
@@ -102,7 +98,7 @@ class App:
         ttk.Button(frame4, text="Показать сводную таблицу", command=self.run_report4).pack(
             padx=5, pady=5)
         
-        # Область вывода результатов
+
         self.result_frame = ttk.LabelFrame(self.text_reports_frame, text="Результаты")
         self.result_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
@@ -115,7 +111,6 @@ class App:
 
     # Настройка вкладки графиков
     def setup_plots(self):
-        # Выбор типа графика
         frame_type = ttk.Frame(self.plots_frame)
         frame_type.pack(fill=tk.X, padx=10, pady=5)
         
@@ -143,7 +138,6 @@ class App:
 
     # Обновление параметров в зависимости от типа графика
     def update_plot_options(self, event=None):
-        # Очищаем предыдущие параметры
         for widget in self.params_frame.winfo_children():
             widget.destroy()
         
@@ -201,18 +195,15 @@ class App:
             self.y_var.pack(side=tk.LEFT, padx=5, fill=tk.X, expand=True)
             self.y_var.current(1)
         
-        # Кнопка построения графика
         ttk.Button(self.params_frame, text="Построить график", command=self.generate_plot).pack(
             side=tk.RIGHT, padx=5)
         
         
     # Настройка вкладки моделей
     def setup_models(self):
-        # Основной фрейм
         main_frame = ttk.Frame(self.models_frame)
         main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        # Выбор модели
         model_frame = ttk.LabelFrame(main_frame, text="Выбор модели")
         model_frame.pack(fill=tk.X, padx=10, pady=5)
         
@@ -321,7 +312,6 @@ class App:
         ttk.Button(btn_frame, text="Выполнить предсказание", command=self.run_prediction).pack(
             side=tk.LEFT, padx=5)
         
-        # Область вывода результатов
         self.model_result_frame = ttk.LabelFrame(main_frame, text="Результаты предсказания")
         self.model_result_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
@@ -330,7 +320,6 @@ class App:
         
     def run_prediction(self):
         try:
-            # Собираем все данные из полей ввода
             input_data = {
                 'person_age': float(self.person_age.get()),
                 'person_gender': self.person_gender.get(),
@@ -357,7 +346,7 @@ class App:
             messagebox.showerror("Ошибка", f"Некорректные данные: {str(e)}")
         
         
-    # Выполнение отчетов
+    # Отчеты
     def run_report1(self):
         try:
             report = clients_by_income_and_age(
@@ -401,7 +390,6 @@ class App:
         except Exception as e:
             messagebox.showerror("Ошибка", f"Ошибка выполнения: {str(e)}")
 
-    # Отображение результатов отчетов
     def display_report(self, report):
         self.result_text.delete(1.0, tk.END)
         
@@ -415,7 +403,6 @@ class App:
         else:
             self.result_text.insert(tk.END, "Неизвестный формат отчета")
 
-    # Генерация графиков
     def generate_plot(self):        
         plot_type = self.plot_type.get()
         
@@ -444,7 +431,7 @@ class App:
         except Exception as e:
             messagebox.showerror("Ошибка", f"Ошибка построения графика: {str(e)}")
 
-# Запуск приложения
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
